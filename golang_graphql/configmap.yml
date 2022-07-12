@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: data-config
+data:
+  db_url: postgres://postgres:postgres@postgres.newnamespace.svc.cluster.local:5437/postgres?sslmode=disable
+  
+

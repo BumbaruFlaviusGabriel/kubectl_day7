@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+
+metadata:
+  name: postgres-deployment
+  namespace: newnamespace
+  labels:
+    app: postgres
+
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: postgres
+  template:
+    metadata:
+      labels:
+        app: postgres
+    spec:
+      containers:
+      - name: postgres
+        image: postgres
+        ports:
+          - containerPort: 5432
+        env:
+          - name: POSTGRES_DB
+            valueFrom:
+              configMapKeyRef:
+                key: db_url
+                name: postgres-config
+          - name: POSTGRES_USER
+            valueFrom:
+              configMapKeyRef:
+                key: username
+                name: postgres-config
+          - name: POSTGRES_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                key: postgres_pw
+                name: mysecret
+          
+
+      

@@ -1,0 +1,22 @@
+version: '2'
+
+services:
+  postgres:
+    image: postgres
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_PASSWORD=mysecretpassword
+      - POSTGRES_USER=postgres
+      - POSTGRES_DB=postgres
+  spring:
+    image: borapaul/springapp:1.4
+    restart: on-failure
+    ports: 
+      - "8080:8080"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://golang_graphql_postgres_1:5432/postgres
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=mysecretpassword
+    depends_on:
+      - postgres
